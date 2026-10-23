@@ -1,0 +1,11 @@
+FROM epos:tf1
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libeigen3-dev libopencv-dev libgoogle-glog-dev && rm -rf /var/lib/apt/lists/*
+COPY external/progressive-x /opt/progressive-x
+COPY setup/prepare_progressivex.py /opt/prepare_progressivex.py
+RUN python /opt/prepare_progressivex.py \
+    && cmake -S /opt/progressive-x -B /opt/progressive-x/build \
+       -DCMAKE_BUILD_TYPE=Release -DCREATE_SAMPLE_PROJECT=OFF \
+       -Dpybind11_DIR=$(python -m pybind11 --cmakedir) \
+    && cmake --build /opt/progressive-x/build --parallel 4
+ENV PYTHONPATH=/workspace/epos:/workspace/epos/external/bop_toolkit:/workspace/epos/external/slim:/opt/epos-renderer/build:/opt/progressive-x/build

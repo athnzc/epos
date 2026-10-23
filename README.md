@@ -189,3 +189,21 @@ Models evaluated in the [BOP Challenge 2020](https://bop.felk.cvut.cz/challenges
 [ITODD](https://bop.felk.cvut.cz/media/data/epos_store/itodd-bop20-xc65-f64.zip),
 [HB](https://bop.felk.cvut.cz/media/data/epos_store/hb-bop20-xc65-f64.zip),
 [YCB-V](https://bop.felk.cvut.cz/media/data/epos_store/ycbv-bop20-xc65-f64.zip)
+
+## <a name="docker"></a> 4. Docker
+Modify `dataset_params.py` in repo root accordingly. 
+
+**Build:**
+```
+cd path/to/epos/root
+docker build -f setup/Dockerfile -t epos:tf1 .
+docker build -f setup/Dockerfile.pose -t epos:pose .
+```
+Run inference for the `fractal_spraying` dataset:
+`chmod +x setup/run_spaghetti_standard_inference.sh`
+`./setup/run_spaghetti_standard_inference.sh <STORE_PATH_HOST> <BOP_PATH_HOST>`
+where
+`STORE_PATH_HOST=/path/to/store/folder`
+`BOP_PATH_HOST=/path/to/bop_datasets`
+Those paths refer to the host machine i.e. *outside* the docker container. The folders will be mounted on the container at runtime.
+

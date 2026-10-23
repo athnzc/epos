@@ -2,3 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+spaghetti-spraying-xc65-f64
+tf_data
+datasets
+.env
